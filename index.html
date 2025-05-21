@@ -1,619 +1,1018 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shwehinnthar Pitaka Library Management System</title>
-<style>
-    body {
-        text-align: center;
-        background-color: #f8f9fa; /* Light background */
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        padding: 20px;
-        color: #333;
-    }
-    h2 {
-        color: #6c0e04;
-        margin-bottom: 20px;
-        font-size: 1.8em;
-    }
-    .header-logo {
-        width: 80px; /* Adjust size as needed */
-        height: auto;
-        margin-bottom: 10px;
-    }
-    .nav-buttons button {
-        padding: 10px 20px;
-        margin: 5px;
-        cursor: pointer;
-        background-color: #6c0e04;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        font-size: 1em;
-        transition: background-color 0.3s ease;
-    }
-    .nav-buttons button:hover {
-        background-color: #921c10;
-    }
-    .search-bar {
-        margin: 20px 0;
-    }
-    .search-bar input {
-        padding: 8px 10px;
-        width: 300px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-size: 1em;
-    }
-    .content {
-        display: none;
-        margin: 20px auto;
-        padding: 20px;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        max-width: 90%;
-        overflow-x: auto; /* For table responsiveness */
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 15px;
-    }
-    table, th, td {
-        border: 1px solid #ddd;
-        padding: 12px;
-        text-align: left;
-    }
-    th {
-        background-color: #6c0e04;
-        color: white;
-        font-weight: bold;
-    }
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
-    tr:hover {
-        background-color: #e2e2e2;
-    }
-    /* Hide action buttons by default */
-    .action-buttons {
-        display: none; /* Hidden by default */
-    }
-    .action-buttons button {
-        padding: 6px 12px;
-        margin: 2px;
-        background-color: #007bff; /* Blue for action */
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-    .action-buttons button:hover {
-        background-color: #0056b3;
-    }
-    .action-buttons button.delete-btn {
-        background-color: #dc3545; /* Red for delete */
-    }
-    .action-buttons button.delete-btn:hover {
-        background-color: #c82333;
-    }
-    .expired {
-        color: red;
-        font-weight: bold;
-    }
-    .input-group {
-        margin-bottom: 15px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-    }
-    .input-group input[type="text"],
-    .input-group input[type="number"] {
-        padding: 8px 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        flex: 1; /* Allows inputs to grow */
-        min-width: 150px; /* Minimum width before wrapping */
-    }
-    .input-group button {
-        flex-shrink: 0; /* Prevents button from shrinking */
-    }
-    .book-cover {
-        max-width: 80px;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shwehinnthar Center</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Myanmar Font */
+        @font-face {
+            font-family: 'Pyidaungsu';
+            src: url('https://cdn.jsdelivr.net/gh/wwwebninja/burmese-fonts@master/Pyidaungsu.ttf') format('truetype');
+        }
 
-    #adminLoginPanel {
-        margin-top: 20px;
-        padding: 20px;
-        background-color: #f0f0f0;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        display: inline-block; /* To center the small panel */
-    }
-    #adminLoginPanel input {
-        padding: 8px;
-        margin: 5px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-    }
-</style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pyidaungsu', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.2rem;
+            color: #f1c40f;
+        }
+
+        .logo-text p {
+            font-size: 0.9rem;
+            color: #ecf0f1;
+        }
+
+        /* Navigation */
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+            display: block;
+        }
+
+        nav ul li a:hover {
+            color: #f1c40f;
+        }
+
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #f1c40f;
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #e74c3c;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        /* Departments Section */
+        .departments {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #e74c3c;
+            margin: 15px auto;
+        }
+
+        .departments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .department-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .department-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .department-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .department-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .department-card:hover .department-img img {
+            transform: scale(1.1);
+        }
+
+        .department-content {
+            padding: 1.5rem;
+        }
+
+        .department-content h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .department-content p {
+            color: #7f8c8d;
+            margin-bottom: 1.5rem;
+        }
+
+        .read-more {
+            color: #e74c3c;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .read-more i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Shwehinnthar FM Section */
+        .radio-section {
+            background-color: #f1f1f1;
+            padding: 5rem 0;
+        }
+
+        .radio-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .radio-info h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .radio-info p {
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .radio-player {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .radio-player iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* Media Production Section */
+        .media-production {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .media-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 250px;
+        }
+
+        .media-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .media-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .media-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .media-overlay h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Training Section */
+        .training {
+            padding: 5rem 0;
+            background-color: #f9f9f9;
+        }
+
+        .courses-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .course-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .course-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .course-icon {
+            font-size: 2.5rem;
+            color: #e74c3c;
+            margin-bottom: 1.5rem;
+        }
+
+        .course-item h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .course-item ul {
+            list-style-position: inside;
+            margin-bottom: 1.5rem;
+        }
+
+        .course-item ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* TV Section */
+        .tv-section {
+            padding: 5rem 0;
+            background-color: #f1f1f1;
+        }
+
+        .tv-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .tv-info h2 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        .tv-info p {
+            margin-bottom: 2rem;
+            color: #555;
+        }
+
+        .tv-player {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .tv-player iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* TV Channel Styles */
+        .main-video-container {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        #main-video {
+            width: 100%;
+            height: 400px;
+            background-color: #000;
+        }
+
+        .thumbnails-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .thumbnail {
+            position: relative;
+            cursor: pointer;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 120px;
+        }
+
+        .thumbnail video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .channel-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 0;
+            background-color: white;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info h3 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .contact-details {
+            margin-bottom: 2rem;
+        }
+
+        .contact-details p {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .contact-details i {
+            margin-right: 10px;
+            color: #e74c3c;
+            margin-top: 3px;
+        }
+
+        .social-media {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-media a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #2c3e50;
+            color: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .social-media a:hover {
+            background-color: #e74c3c;
+            transform: translateY(-3px);
+        }
+
+        .contact-form {
+            background-color: #f9f9f9;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Pyidaungsu', 'Arial', sans-serif;
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            color: #f1c40f;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #e74c3c;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #f1c40f;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .radio-container,
+            .tv-container {
+                grid-template-columns: 1fr;
+            }
+
+            .radio-player iframe,
+            .tv-player iframe {
+                height: 350px;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            #main-video {
+                height: 350px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .logo {
+                margin-bottom: 1rem;
+                justify-content: center;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+
+            nav {
+                display: none;
+                width: 100%;
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.1rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            #main-video {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 4rem 0;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .radio-player iframe,
+            .tv-player iframe {
+                height: 250px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            #main-video {
+                height: 250px;
+            }
+
+            .thumbnails-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-<img src="sht.png" alt="Shwehinnthar Pitaka Library Logo" class="header-logo">
-<h2>Shwehinnthar Pitaka Library <br>Library Management System</h2>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <img src="shwehinnthar.jpg" alt="Shwehinnthar Pitaka Library Logo">
+                <div class="logo-text">
+                    <h1>Shwehinnthar Center</h1>
+                    <p>စာကြည့်တိုက်နှင့်ရုပ်/သံ ဌာန</p>
+                </div>
+            </div>
+            <div class="menu-toggle">☰</div>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="#home">ပင်မစာမျက်နှာ</a></li>
+                    <li><a href="#library">စာကြည့်တိုက်</a></li>
+                    <li><a href="#tv">ရုပ်မြင်သံကြား</a></li>
+                    <li><a href="#radio">ရေဒီယို</a></li>
+                    <li><a href="#programmes">ရုပ်/သံ အစီအစဉ်များ</a></li>
+                    <li><a href="#training">သင်တန်းများ</a></li>
+                    <li><a href="#contact">ဆက်သွယ်ရန်</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-<div class="nav-buttons">
-    <button onclick="showContent('bookslist')">Books List</button>
-    <button onclick="showContent('rentedbookslist')">Rented Books List</button>
-    <button onclick="showContent('memberslist')">Members List</button>
-    <button onclick="goToIndex()">Exit</button>
-    <button onclick="showAdminLogin()">Admin Login</button> </div>
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Shwehinnthar Center မှ ကြိုဆိုပါသည်</h1>
+            <p>စာကြည့်တိုက်နှင့် တိုက်ရိုက်ထုတ်လွှင့်မှု ရုပ်/သံ ဝန်ဆောင်မှုများကို <br> အဆင့်မြင့်စွာဖြင့် ပေးစွမ်းနေပါသည်</p>
+            <a href="#departments" class="btn">ကျွန်ုပ်တို့၏ ဝန်ဆောင်မှုများ</a>
+        </div>
+    </section>
 
-<div class="search-bar">
-    <input type="text" id="searchBox" placeholder="Search for a book by title or author..." onkeyup="searchBooks()">
-</div>
+    <section class="departments" id="departments">
+        <div class="container">
+            <h2 class="section-title">ကျွန်ုပ်တို့၏ ဌာနများ</h2>
+            <div class="departments-grid">
+                <div class="department-card">
+                    <div class="department-img">
+                        <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Library">
+                    </div>
+                    <div class="department-content">
+                        <h3>ရွှေဟင်္သာစာကြည့်တိုက်</h3>
+                        <p>ဗုဒ္ဓဘာသာ၊ မြန်မာစာပေများနှင့် ပညာရေးဆိုင်ရာစာအုပ်စာတမ်းများ စုဆောင်းထားရှိပါသည်။</p>
+                        <a href="#" class="read-more">ဆက်လက်ဖတ်ရှုရန် <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
 
-<div id="adminLoginPanel" style="display: none;">
-    <h3>Admin Login</h3>
-    <input type="password" id="adminPassword" placeholder="Enter Admin Password">
-    <button onclick="loginAdmin()">Login</button>
-</div>
+                <div class="department-card">
+                    <div class="department-img">
+                        <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Radio">
+                    </div>
+                    <div class="department-content">
+                        <h3>ရွှေဟင်္သာ ရေဒီယို</h3>
+                        <p>ရွှေဟင်္သာ FM ရေဒီယို၊ မြန်မာသံစဉ်နှင့် အထွေထွေဗဟုသုတအစီအစဉ်များကို 24/7 ထုတ်လွှင့်ပေးလျက်ရှိပါသည်။</p>
+                        <a href="#radio" class="read-more">နားဆင်ရန် <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
 
-<div id="bookslistContent" class="content">
-    <h2>Books List</h2>
-    <div class="input-group" id="addBookForm" style="display: none;"> <input type="text" id="bookTitle" placeholder="Book Title">
-        <input type="text" id="bookAuthor" placeholder="Author">
-        <input type="text" id="bookPublisher" placeholder="Publisher">
-        <input type="number" id="bookYear" placeholder="Year" min="0">
-        <input type="text" id="bookISBN" placeholder="ISBN (Optional)">
-        <input type="text" id="bookCategory" placeholder="Category (Optional)">
-        <input type="number" id="bookPages" placeholder="Pages (Optional)" min="1">
-        <input type="text" id="bookCoverUrl" placeholder="Cover Image URL (Optional)">
-        <input type="text" id="bookLocation" placeholder="Location (Shelf, Room)">
-        <button onclick="addBook()">Add Book</button>
-    </div>
-    <table id="booksTable"></table>
-</div>
+                <div class="department-card">
+                    <div class="department-img">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Training">
+                    </div>
+                    <div class="department-content">
+                        <h3>ရုပ်/သံဌာန</h3>
+                        <p>မြန်မာ့ရုပ်မြင်သံကြားအစီအစဉ်များကို Channel အလိုက် ဖော်ပြထားအတွက် ရုပ်/သံ အစီအစဉ်များကို တိုက်ရိုက်ကြည့်ရှုနိုင်ပါသည်။</p>
+                        <a href="#training" class="read-more">ရုပ်/သံများ ကြည့်ရှုရန် <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div id="rentedbookslistContent" class="content">
-    <h2>Rented Books List</h2>
-    <table id="rentedBooksTable">
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>Title / Author</th>
-                <th>Renter</th>
-                <th>Issue Date</th>
-                <th>Expired Date</th>
-                <th class="admin-only">Actions</th> </tr>
-        </thead>
-        <tbody id="rentedBooksTableBody"></tbody>
-    </table>
-</div>
+    <section class="radio-section" id="radio">
+        <div class="container">
+            <h2 class="section-title">ရွှေဟင်္သာ FM ရေဒီယို</h2>
+            <div class="radio-container">
+                <div class="radio-info">
+                    <h2>ရေဒီယိုအစီအစဉ်များ</h2>
+                    <p>Shwehinnthar FM Radioသည် နေ့စဉ် ၂၄ နာရီ ထုတ်လွှင့်ပေးလျက်ရှိပြီး မြန်မာသံစဉ်၊ ဖျော်ဖြေရေး အစီအစဉ်များကို အချိန်နှင့်တပြေးညီ နားဆင်နိုင်ပါသည်။</p>
+                    <p>ကျွန်ုပ်တို့၏ အစီအစဉ်များတွင် မြန်မာနိုင်ငံ၏ ဂီတများ၊ ရိုးရာဂီတများ၊ ဆွေးနွေးပွဲများနှင့် အထူးအစီအစဉ်များ ပါဝင်ပါသည်။</p>
+                    <a href="#" class="btn">အစီအစဉ်ဇယား ကြည့်ရှုရန်</a>
+                </div>
+                <div class="radio-player">
+                    <iframe src="https://onlineradiobox.com/mm/myanmar/?cs=mm.myanmar&played=1" allow="autoplay"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div id="memberslistContent" class="content">
-    <h2>Members List</h2>
-    <div class="input-group" id="addMemberForm" style="display: none;"> <input type="text" id="memberName" placeholder="Member Name">
-        <input type="text" id="memberId" placeholder="Member ID">
-        <input type="text" id="memberPhone" placeholder="Phone Number">
-        <input type="text" id="memberEmail" placeholder="Email (Optional)">
-        <input type="text" id="memberNRC" placeholder="NRC/ID Card (Optional)">
-        <button onclick="addMember()">Add Member</button>
-    </div>
-    <table id="membersTable">
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>Member Name</th>
-                <th>Member ID</th>
-                <th>Phone Number</th>
-                <th>Email</th>
-                <th>NRC/ID</th>
-                <th class="admin-only">Actions</th> </tr>
-        </thead>
-        <tbody id="membersTableBody"></tbody>
-    </table>
-</div>
+    <section class="tv-section" id="tv">
+        <div class="container">
+            <h2 class="section-title">Shwehinnthar TV</h2>
+            <div class="tv-container">
+                <div class="tv-info">
+                    <h2>ရုပ်သံအစီအစဉ်များ</h2>
+                    <p>မြန်မာ့ရုပ်သံလိုင်း သည် နေ့စဉ် အရည်အသွေးမြင့် ပညာပေး၊ ယဉ်ကျေးမှုနှင့် ဖျော်ဖြေရေး အစီအစဉ်များကို ထုတ်လွှင့်ပေးလျက်ရှိပါသည်။</p>
+                    <p>ကျွန်ုပ်တို့၏ အစီအစဉ်များတွင် ဗုဒ္ဓဘာသာဆိုင်ရာ အစီအစဉ်များ၊ ယဉ်ကျေးမှုဆိုင်ရာ အစီအစဉ်များနှင့် ပညာပေးအစီအစဉ်များ ပါဝင်ပါသည်။</p>
+                    <a href="#" class="btn">အစီအစဉ်ဇယား ကြည့်ရှုရန်</a>
+                </div>
+                <div class="tv-player">
+                    <div class="content">
+                        <h2>Myanmar TV Channels</h2>
+                        <div class="main-video-container">
+                            <video id="main-video" controls autoplay></video>
+                        </div>
+                        <div class="thumbnails-container">
+                            <div class="thumbnail" onclick="changeMainVideo('video1', 'http://l1-xl1.myanmarnet.com/relay/mahar/ch1/stream.m3u8')">
+                                <div class="channel-title">Mahar Channel</div>
+                                <video id="video1" muted></video>
+                            </div>
+                            <div class="thumbnail" onclick="changeMainVideo('video2', 'http://l1-xl1.myanmarnet.com/relay/mntv/ch1/stream.m3u8')">
+                                <div class="channel-title">MNTV Channel</div>
+                                <video id="video2" muted></video>
+                            </div>
+                            <div class="thumbnail" onclick="changeMainVideo('video3', 'https://l1-xl1.myanmarnet.com/relay/channelk/ch1/stream_hi/index.m3u8')">
+                                <div class="channel-title">Channel-K</div>
+                                <video id="video3" muted></video>
+                            </div>
+                            <div class="thumbnail" onclick="changeMainVideo('video4', 'https://5a13fe32ef748.streamlock.net/mmplay/mrtv-entertainment/playlist.m3u8')">
+                                <div class="channel-title">MRTV</div>
+                                <video id="video4" muted></video>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<script>
-    // --- IMPORTANT: This is NOT a secure login system. It's for demonstration only. ---
-    // The password is hardcoded in JavaScript and can be easily seen by anyone.
-    const ADMIN_PASSWORD = "admin123"; // CHANGE THIS IN A REAL APP, BUT DON'T PUT IT HERE!
-    let isAdminLoggedIn = false;
+    <section class="training" id="training">
+        <div class="container">
+            <h2 class="section-title">သင်တန်းဌာန</h2>
+            <div class="courses-list">
+                <div class="course-item">
+                    <div class="course-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>ဗုဒ္ဓစာပေနှင့်ယဉ်ကျေးမှုသင်တန်း</h3>
+                    <ul>
+                        <li>ဗုဒ္ဓစာပေနှင့်ယဉ်ကျေးမှုသမိုင်း</li>
+                        <li>ဓမ္မဖြင့် ဘဝကိုကျင့်သုံးနေထိုင်နည်း</li>
+                        <li>ဗုဒ္ဓဒဿနိကဗေဒဘာသာရပ်</li>
+                    </ul>
+                    <a href="#" class="btn">အသေးစိတ်ကြည့်ရှုရန်</a>
+                </div>
+                <div class="course-item">
+                    <div class="course-icon">
+                        <i class="fas fa-broadcast-tower"></i>
+                    </div>
+                    <h3>ကွန်ပျူတာနှင့် ရုပ်/သံလွှင့်သင်တန်း</h3>
+                    <ul>
+                        <li>ကွန်ပျူတာဆိုင်ရာနည်းပညာ</li>
+                        <li>အစီအစဉ်တင်ဆက်နည်း</li>
+                        <li>တိုက်ရိုက်ထုတ်လွှင့်မှုဆိုင်ရာနည်းပညာ</li>
+                    </ul>
+                    <a href="#" class="btn">အသေးစိတ်ကြည့်ရှုရန်</a>
+                </div>
+                <div class="course-item">
+                    <div class="course-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3>ဘာသာစကားသင်တန်းများ</h3>
+                    <ul>
+                        <li>ပါဠိစာပေနှင့်စကားပြော</li>
+                        <li>အင်္ဂလိပ်စာနှင့်စကားပြော</li>
+                        <li>ထိုင်းစာနှင့်စကားပြော</li>
+                    </ul>
+                    <a href="#" class="btn">အသေးစိတ်ကြည့်ရှုရန်</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    // Initialize data from Local Storage
-    let books = JSON.parse(localStorage.getItem('books')) || [];
-    let members = JSON.parse(localStorage.getItem('members')) || [];
-    let rentedBooks = JSON.parse(localStorage.getItem('rentedBooks')) || [];
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">ဆက်သွယ်ရန်</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>ကျွန်ုပ်တို့နှင့် ဆက်သွယ်ရန်</h3>
+                    <div class="contact-details">
+                        <p><i class="fas fa-map-marker-alt"></i> အမှတ် ၆၆၃၊ ရွှေဟင်္သာလမ်း၊ တိုးချဲ့ ၁၊ ကျွန်းလေးပိုင်း၊ မြို့မ ၅ ရပ်ကွက်၊ <br>ညောင်လေးပင်မြို့၊ ပဲခူးတိုင်းဒေသကြီး</p>
+                        <p><i class="fas fa-phone"></i> +၉၅၉၃၃၉၁၃၃၈၈</p>
+                        <p><i class="fas fa-envelope"></i> info@shwehinnthar.edu.mm</p>
+                        <p><i class="fas fa-clock"></i> တနင်္လာနေ့မှ စနေနေ့အထိ - နံနက် ၅:၀၀ မှ ည ၁၀:၀၀ အထိ</p>
+                    </div>
+                    <h3>လူမှုကွန်ရက်များ</h3>
+                    <div class="social-media">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">အမည်</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">အီးမေးလ်</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">မက်ဆေ့ချ်</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">ပို့ရန်</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    // --- Utility Functions ---
-    function saveToLocalStorage() {
-        localStorage.setItem('books', JSON.stringify(books));
-        localStorage.setItem('members', JSON.stringify(members));
-        localStorage.setItem('rentedBooks', JSON.stringify(rentedBooks));
-    }
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Shwehinnthar Center</h3>
+                    <p>ဘာသာစာပေ ယဉ်ကျေးမှုနှင့် တိုက်ရိုက်ထုတ်လွှင့်ရေးဝန်ဆောင်မှုများကို အဆင့်မြင့်စွာဖြင့် ပေးစွမ်းနေပါသည်။</p>
+                </div>
+                <div class="footer-column">
+                    <h3>စာမျက်နှာလင့်ခ်များ</h3>
+                    <ul>
+                        <li><a href="#home">ပင်မစာမျက်နှာ</a></li>
+                        <li><a href="#radio">ရွှေဟင်္သာရေဒီယို</a></li>
+                        <li><a href="#tv">ရွှေဟင်္သာရုပ်သံ</a></li>
+                        <li><a href="#training">သင်တန်းများ</a></li>
+                        <li><a href="#contact">ဆက်သွယ်ရန်</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>ဆက်သွယ်ရန်</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> အမှတ် ၆၆၃၊ ရွှေဟင်္သာလမ်း၊ တိုးချဲ့ ၁၊ ကျွန်းလေးပိုင်း၊ မြို့မ ၅ ရပ်ကွက်၊ ညောင်လေးပင်မြို့၊ ပဲခူးတိုင်းဒေသကြီး</li>
+                        <li><i class="fas fa-phone"></i> +၉၅ ၉၃၃၉၁၃၃၈၈</li>
+                        <li><i class="fas fa-envelope"></i> info@shwehinnthar.edu.mm</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>မေးမြန်းစုံစမ်းရန်</h3>
+                    <p>ကျွန်ုပ်တို့၏ ရုပ်/သံအစီအစဉ်များနှင့် သင်တန်းအချက်အလက်များကို ရယူလိုပါက</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="သင့်အီးမေးလ်လိပ်စာ" required>
+                        <button type="submit" class="btn">စာရင်းသွင်းရန်</button>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 Shwehinnthar Center. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-    // Function to update visibility of admin-only elements
-    function updateAdminVisibility() {
-        const adminElements = document.querySelectorAll('.admin-only');
-        const actionButtonContainers = document.querySelectorAll('.action-buttons');
-        const addBookForm = document.getElementById('addBookForm');
-        const addMemberForm = document.getElementById('addMemberForm');
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const mainNav = document.getElementById('main-nav');
 
-        if (isAdminLoggedIn) {
-            adminElements.forEach(el => el.style.display = 'table-cell'); // For table headers
-            actionButtonContainers.forEach(el => el.style.display = 'table-cell'); // For table cells with buttons
-            if (addBookForm) addBookForm.style.display = 'flex';
-            if (addMemberForm) addMemberForm.style.display = 'flex';
-        } else {
-            adminElements.forEach(el => el.style.display = 'none');
-            actionButtonContainers.forEach(el => el.style.display = 'none');
-            if (addBookForm) addBookForm.style.display = 'none';
-            if (addMemberForm) addMemberForm.style.display = 'none';
-        }
-    }
-
-    // --- Admin Login ---
-    function showAdminLogin() {
-        document.getElementById('adminLoginPanel').style.display = 'block';
-        document.getElementById('adminPassword').value = ''; // Clear password field
-    }
-
-    function loginAdmin() {
-        const enteredPassword = document.getElementById('adminPassword').value;
-        if (enteredPassword === ADMIN_PASSWORD) {
-            isAdminLoggedIn = true;
-            alert("Admin Login Successful!");
-            document.getElementById('adminLoginPanel').style.display = 'none';
-            updateAdminVisibility(); // Show admin features
-            showContent('bookslist'); // Optionally go to books list after login
-        } else {
-            alert("Incorrect Password!");
-            isAdminLoggedIn = false;
-        }
-    }
-
-    // --- Content Display ---
-    function showContent(id) {
-        let contents = document.getElementsByClassName("content");
-        for (let i = 0; i < contents.length; i++) {
-            contents[i].style.display = "none";
-        }
-        let selectedContent = document.getElementById(id + "Content");
-        if (selectedContent) {
-            selectedContent.style.display = "block";
-            if (id === 'bookslist') {
-                displayBooks();
-            } else if (id === 'rentedbookslist') {
-                displayRentedBooks();
-            } else if (id === 'memberslist') {
-                displayMembers();
-            }
-        }
-        // Hide admin login panel when navigating to other content
-        document.getElementById('adminLoginPanel').style.display = 'none';
-    }
-
-    // --- Book Management ---
-    function addBook() {
-        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
-        const title = document.getElementById("bookTitle").value.trim();
-        const author = document.getElementById("bookAuthor").value.trim();
-        const publisher = document.getElementById("bookPublisher").value.trim();
-        const year = document.getElementById("bookYear").value.trim();
-        const isbn = document.getElementById("bookISBN").value.trim();
-        const category = document.getElementById("bookCategory").value.trim();
-        const pages = document.getElementById("bookPages").value.trim();
-        const coverUrl = document.getElementById("bookCoverUrl").value.trim();
-        const location = document.getElementById("bookLocation").value.trim();
-
-        if (title && author && publisher && year && location) {
-            const book = {
-                id: Date.now(), // Unique ID for each book
-                title, author, publisher, year, isbn, category, pages, coverUrl, location,
-                isRented: false
-            };
-            books.push(book);
-            saveToLocalStorage();
-            displayBooks();
-            // Clear input fields
-            document.getElementById("bookTitle").value = "";
-            document.getElementById("bookAuthor").value = "";
-            document.getElementById("bookPublisher").value = "";
-            document.getElementById("bookYear").value = "";
-            document.getElementById("bookISBN").value = "";
-            document.getElementById("bookCategory").value = "";
-            document.getElementById("bookPages").value = "";
-            document.getElementById("bookCoverUrl").value = "";
-            document.getElementById("bookLocation").value = "";
-        } else {
-            alert("Book Title, Author, Publisher, Year, and Location are required!");
-        }
-    }
-
-    function displayBooks(filteredBooks = books) {
-        let table = document.getElementById("booksTable");
-        let content = `<thead>
-            <tr>
-                <th>No.</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Publisher</th>
-                <th>Year</th>
-                <th>ISBN</th>
-                <th>Category</th>
-                <th>Pages</th>
-                <th>Cover</th>
-                <th>Location</th>
-                <th>Status</th>
-                <th class="admin-only">Actions</th>
-            </tr>
-        </thead>
-        <tbody id="booksTableBody"></tbody>`;
-        table.innerHTML = content;
-        const tableBody = document.getElementById("booksTableBody");
-        let counter = 1;
-
-        filteredBooks.forEach((book) => {
-            const statusText = book.isRented ? 'Rented' : 'Available';
-            const statusColor = book.isRented ? 'red' : 'green';
-            tableBody.innerHTML += `<tr>
-                <td>${counter}</td>
-                <td>${book.title}</td>
-                <td>${book.author}</td>
-                <td>${book.publisher}</td>
-                <td>${book.year}</td>
-                <td>${book.isbn || 'N/A'}</td>
-                <td>${book.category || 'N/A'}</td>
-                <td>${book.pages || 'N/A'}</td>
-                <td>${book.coverUrl ? `<img src="${book.coverUrl}" alt="Cover" class="book-cover">` : 'N/A'}</td>
-                <td>${book.location}</td>
-                <td style="color: ${statusColor}; font-weight: bold;">${statusText}</td>
-                <td class="action-buttons">
-                    <button onclick="editBook(${book.id})">Edit</button>
-                    <button class="delete-btn" onclick="deleteBook(${book.id})">Delete</button>
-                    ${!book.isRented ? `<button onclick="promptRentBook(${book.id})">Rent</button>` : ''}
-                </td>
-            </tr>`;
-            counter++;
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
         });
-        updateAdminVisibility(); // Re-apply visibility after rendering
-    }
 
-    function editBook(bookId) {
-        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
-        const bookIndex = books.findIndex(b => b.id === bookId);
-        if (bookIndex > -1) {
-            const book = books[bookIndex];
-            const newTitle = prompt("Enter new title:", book.title);
-            if (newTitle !== null) {
-                book.title = newTitle;
-                book.author = prompt("Enter new author:", book.author) || book.author;
-                book.publisher = prompt("Enter new publisher:", book.publisher) || book.publisher;
-                book.year = prompt("Enter new year:", book.year) || book.year;
-                book.isbn = prompt("Enter new ISBN:", book.isbn) || book.isbn;
-                book.category = prompt("Enter new category:", book.category) || book.category;
-                book.pages = prompt("Enter new pages:", book.pages) || book.pages;
-                book.coverUrl = prompt("Enter new cover URL:", book.coverUrl) || book.coverUrl;
-                book.location = prompt("Enter new location:", book.location) || book.location;
-                saveToLocalStorage();
-                displayBooks();
-            }
-        }
-    }
-
-    function deleteBook(bookId) {
-        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
-        const bookIndex = books.findIndex(b => b.id === bookId);
-        if (bookIndex > -1) {
-            if (confirm(`Are you sure you want to delete "${books[bookIndex].title}"?`)) {
-                rentedBooks = rentedBooks.filter(rb => rb.bookId !== bookId); // Also remove from rented
-                books.splice(bookIndex, 1);
-                saveToLocalStorage();
-                displayBooks();
-                displayRentedBooks();
-            }
-        }
-    }
-
-    function searchBooks() {
-        const searchValue = document.getElementById("searchBox").value.toLowerCase();
-        const filteredBooks = books.filter(book =>
-            book.title.toLowerCase().includes(searchValue) ||
-            book.author.toLowerCase().includes(searchValue) ||
-            book.publisher.toLowerCase().includes(searchValue) ||
-            String(book.year).toLowerCase().includes(searchValue) ||
-            String(book.isbn).toLowerCase().includes(searchValue) ||
-            String(book.category).toLowerCase().includes(searchValue)
-        );
-        displayBooks(filteredBooks);
-    }
-
-    // --- Member Management ---
-    function addMember() {
-        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
-        const name = document.getElementById("memberName").value.trim();
-        const id = document.getElementById("memberId").value.trim();
-        const phone = document.getElementById("memberPhone").value.trim();
-        const email = document.getElementById("memberEmail").value.trim();
-        const nrc = document.getElementById("memberNRC").value.trim();
-
-        if (name && id) {
-            members.push({ name, id, phone, email, nrc });
-            saveToLocalStorage();
-            displayMembers();
-            document.getElementById("memberName").value = "";
-            document.getElementById("memberId").value = "";
-            document.getElementById("memberPhone").value = "";
-            document.getElementById("memberEmail").value = "";
-            document.getElementById("memberNRC").value = "";
-        } else {
-            alert("Member name and ID are required!");
-        }
-    }
-
-    function displayMembers() {
-        let tableBody = document.getElementById("membersTableBody");
-        let content = "";
-        let counter = 1;
-
-        members.forEach((member) => {
-            content += `<tr>
-                <td>${counter}</td>
-                <td>${member.name}</td>
-                <td>${member.id}</td>
-                <td>${member.phone || 'N/A'}</td>
-                <td>${member.email || 'N/A'}</td>
-                <td>${member.nrc || 'N/A'}</td>
-                <td class="action-buttons">
-                    <button onclick="editMember(${member.id})">Edit</button>
-                    <button class="delete-btn" onclick="deleteMember(${member.id})">Delete</button>
-                </td>
-            </tr>`;
-            counter++;
+        // Close menu when a navigation link is clicked (for mobile)
+        document.querySelectorAll('#main-nav ul li a').forEach(item => {
+            item.addEventListener('click', () => {
+                if (mainNav.classList.contains('active')) {
+                    mainNav.classList.remove('active');
+                }
+            });
         });
-        tableBody.innerHTML = content;
-        updateAdminVisibility(); // Re-apply visibility after rendering
-    }
 
-    function editMember(memberId) {
-        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
-        const memberIndex = members.findIndex(m => m.id === memberId);
-        if (memberIndex > -1) {
-            const member = members[memberIndex];
-            const newName = prompt("Enter new name:", member.name);
-            if (newName !== null) {
-                member.name = newName;
-                member.id = prompt("Enter new ID:", member.id) || member.id;
-                member.phone = prompt("Enter new phone:", member.phone) || member.phone;
-                member.email = prompt("Enter new email:", member.email) || member.email;
-                member.nrc = prompt("Enter new NRC/ID:", member.nrc) || member.nrc;
-                saveToLocalStorage();
-                displayMembers();
-            }
-        }
-    }
+        // TV Channel Switching
+        const mainVideo = document.getElementById('main-video');
+        const thumbnails = document.querySelectorAll('.thumbnail video');
 
-    function deleteMember(memberId) {
-        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
-        const memberIndex = members.findIndex(m => m.id === memberId);
-        if (memberIndex > -1) {
-            if (confirm(`Are you sure you want to delete member "${members[memberIndex].name}"?`)) {
-                members.splice(memberIndex, 1);
-                saveToLocalStorage();
-                displayMembers();
-            }
-        }
-    }
+        function changeMainVideo(videoId, streamUrl) {
+            // Pause all thumbnail videos and set current time to 0
+            thumbnails.forEach(video => {
+                video.pause();
+                video.currentTime = 0;
+            });
 
-    // --- Rented Books Management ---
-    function promptRentBook(bookId) {
-        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
-        const book = books.find(b => b.id === bookId);
-        if (!book) return;
-
-        if (book.isRented) {
-            alert("This book is already rented.");
-            return;
+            // Set the main video source and play
+            mainVideo.src = streamUrl;
+            mainVideo.play();
         }
 
-        const renterName = prompt(`Enter the renter's name for "${book.title}":`);
-        if (!renterName) return;
-
-        const issueDate = new Date().toISOString().split('T')[0];
-        const expirationDate = new Date();
-        expirationDate.setDate(expirationDate.getDate() + 7); // 7 days rental
-        const expiredDate = expirationDate.toISOString().split('T')[0];
-
-        book.isRented = true; // Mark the book as rented in the main books array
-
-        rentedBooks.push({
-            bookId: book.id,
-            title: book.title,
-            author: book.author,
-            renter: renterName,
-            issueDate: issueDate,
-            expiredDate: expiredDate
+        // Initialize thumbnails - load the first frame but don't autoplay
+        thumbnails.forEach(video => {
+            video.load(); // Load video metadata
+            video.addEventListener('loadeddata', () => {
+                video.currentTime = 0; // Set to the first frame
+            });
         });
-        saveToLocalStorage();
-        displayBooks(); // Update status in books list
-        displayRentedBooks(); // Update rented books list
-    }
 
-    function displayRentedBooks() {
-        let tableBody = document.getElementById("rentedBooksTableBody");
-        let content = "";
-        let counter = 1;
-
-        rentedBooks.forEach((rentedBook) => {
-            const currentDate = new Date();
-            const expiredDate = new Date(rentedBook.expiredDate);
-            const rowClass = currentDate > expiredDate ? 'expired' : '';
-
-            content += `<tr class="${rowClass}">
-                <td>${counter}</td>
-                <td>${rentedBook.title} / ${rentedBook.author}</td>
-                <td>${rentedBook.renter}</td>
-                <td>${rentedBook.issueDate}</td>
-                <td>${rentedBook.expiredDate}</td>
-                <td class="action-buttons">
-                    <button onclick="returnBook(${rentedBook.bookId})">Return</button>
-                    <button onclick="renewBook(${rentedBook.bookId})">Renew</button>
-                </td>
-            </tr>`;
-            counter++;
+        // Optionally, set the initial main video to the first channel
+        // or a default stream.
+        // For example, to start with Mahar Channel:
+        window.addEventListener('DOMContentLoaded', () => {
+             changeMainVideo('video1', 'http://l1-xl1.myanmarnet.com/relay/mahar/ch1/stream.m3u8');
         });
-        tableBody.innerHTML = content;
-        updateAdminVisibility(); // Re-apply visibility after rendering
-    }
 
-    function returnBook(bookId) {
-        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
-        const bookIndexInRented = rentedBooks.findIndex(rb => rb.bookId === bookId);
-        const bookIndexInBooks = books.findIndex(b => b.id === bookId);
-
-        if (bookIndexInRented > -1 && bookIndexInBooks > -1) {
-            if (confirm(`Are you sure you want to return "${books[bookIndexInBooks].title}"?`)) {
-                rentedBooks.splice(bookIndexInRented, 1); // Remove from rentedBooks list
-                books[bookIndexInBooks].isRented = false; // Mark as not rented in main books list
-                saveToLocalStorage();
-                displayRentedBooks();
-                displayBooks(); // Update books list status
-            }
-        }
-    }
-
-    function renewBook(bookId) {
-        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
-        const rentedBookIndex = rentedBooks.findIndex(rb => rb.bookId === bookId);
-        if (rentedBookIndex > -1) {
-            let newExpirationDate = new Date(rentedBooks[rentedBookIndex].expiredDate);
-            newExpirationDate.setDate(newExpirationDate.getDate() + 7); // Renew for 7 more days
-            rentedBooks[rentedBookIndex].expiredDate = newExpirationDate.toISOString().split('T')[0];
-            saveToLocalStorage();
-            displayRentedBooks();
-        }
-    }
-
-    // --- Initial Load ---
-    function goToIndex() {
-        // Reloads the current page, effectively resetting the state
-        location.reload();
-    }
-
-    // When the page loads, display books and update visibility of admin features
-    window.onload = function() {
-        showContent('bookslist');
-        updateAdminVisibility(); // Initially hide admin features
-    }
-</script>
+    </script>
 </body>
 </html>
