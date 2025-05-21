@@ -2,69 +2,184 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Library Management System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shwehinnthar Pitaka Library Management System</title>
 <style>
-body { 
-    text-align: center; 
-    background-color: lightyellow; 
-    font-family: Arial, sans-serif;
-}
-h2 {
-    color: #6c0e04;
-}
-.content { 
-    display: none; 
-    margin: 15px; 
-}
-button {
-    padding: 5px 5px;
-    margin: 3px;
-    cursor: pointer;
-    background-color: #6c0e04;
-    color: white;
-    border: none;
-    border-radius: 5px;
-}
-button:hover {
-    background-color: gray;
-}
-table { 
-    width: 100%; 
-    margin: auto; 
-    border-collapse: collapse; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-table, th, td { 
-    border: 1px solid #aaa; 
-    padding: 10px; 
-}
-th {background-color:#fff000;}
-thead {
-    background-color: #6c0e04;
-    color: white;
-}
-.green-background {color: blue;}
+    body {
+        text-align: center;
+        background-color: #f8f9fa; /* Light background */
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 20px;
+        color: #333;
+    }
+    h2 {
+        color: #6c0e04;
+        margin-bottom: 20px;
+        font-size: 1.8em;
+    }
+    .header-logo {
+        width: 80px; /* Adjust size as needed */
+        height: auto;
+        margin-bottom: 10px;
+    }
+    .nav-buttons button {
+        padding: 10px 20px;
+        margin: 5px;
+        cursor: pointer;
+        background-color: #6c0e04;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1em;
+        transition: background-color 0.3s ease;
+    }
+    .nav-buttons button:hover {
+        background-color: #921c10;
+    }
+    .search-bar {
+        margin: 20px 0;
+    }
+    .search-bar input {
+        padding: 8px 10px;
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1em;
+    }
+    .content {
+        display: none;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        max-width: 90%;
+        overflow-x: auto; /* For table responsiveness */
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+    table, th, td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+    th {
+        background-color: #6c0e04;
+        color: white;
+        font-weight: bold;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    tr:hover {
+        background-color: #e2e2e2;
+    }
+    /* Hide action buttons by default */
+    .action-buttons {
+        display: none; /* Hidden by default */
+    }
+    .action-buttons button {
+        padding: 6px 12px;
+        margin: 2px;
+        background-color: #007bff; /* Blue for action */
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .action-buttons button:hover {
+        background-color: #0056b3;
+    }
+    .action-buttons button.delete-btn {
+        background-color: #dc3545; /* Red for delete */
+    }
+    .action-buttons button.delete-btn:hover {
+        background-color: #c82333;
+    }
+    .expired {
+        color: red;
+        font-weight: bold;
+    }
+    .input-group {
+        margin-bottom: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+    }
+    .input-group input[type="text"],
+    .input-group input[type="number"] {
+        padding: 8px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        flex: 1; /* Allows inputs to grow */
+        min-width: 150px; /* Minimum width before wrapping */
+    }
+    .input-group button {
+        flex-shrink: 0; /* Prevents button from shrinking */
+    }
+    .book-cover {
+        max-width: 80px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
 
-.expired { 
-    color: red; 
-}
+    #adminLoginPanel {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f0f0f0;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        display: inline-block; /* To center the small panel */
+    }
+    #adminLoginPanel input {
+        padding: 8px;
+        margin: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
 </style>
 </head>
 <body>
-<img src="sht.jpg" width=8% 8%>
+<img src="sht.png" alt="Shwehinnthar Pitaka Library Logo" class="header-logo">
 <h2>Shwehinnthar Pitaka Library <br>Library Management System</h2>
-<button onclick="showContent('bookslist')">Books List</button>
-<button onclick="showContent('rentedbookslist')">Rented Books List</button>
-<button onclick="goToIndex()">Exit</button>
 
-<div>
-    <input type="text" id="searchBox" placeholder="Search for a book..." onkeyup="searchBooks()">
+<div class="nav-buttons">
+    <button onclick="showContent('bookslist')">Books List</button>
+    <button onclick="showContent('rentedbookslist')">Rented Books List</button>
+    <button onclick="showContent('memberslist')">Members List</button>
+    <button onclick="goToIndex()">Exit</button>
+    <button onclick="showAdminLogin()">Admin Login</button> </div>
+
+<div class="search-bar">
+    <input type="text" id="searchBox" placeholder="Search for a book by title or author..." onkeyup="searchBooks()">
+</div>
+
+<div id="adminLoginPanel" style="display: none;">
+    <h3>Admin Login</h3>
+    <input type="password" id="adminPassword" placeholder="Enter Admin Password">
+    <button onclick="loginAdmin()">Login</button>
 </div>
 
 <div id="bookslistContent" class="content">
     <h2>Books List</h2>
-    <input type="text" id="bookTitle" placeholder="Enter Book Information">
-    <button onclick="addBook()">Add Book</button>
+    <div class="input-group" id="addBookForm" style="display: none;"> <input type="text" id="bookTitle" placeholder="Book Title">
+        <input type="text" id="bookAuthor" placeholder="Author">
+        <input type="text" id="bookPublisher" placeholder="Publisher">
+        <input type="number" id="bookYear" placeholder="Year" min="0">
+        <input type="text" id="bookISBN" placeholder="ISBN (Optional)">
+        <input type="text" id="bookCategory" placeholder="Category (Optional)">
+        <input type="number" id="bookPages" placeholder="Pages (Optional)" min="1">
+        <input type="text" id="bookCoverUrl" placeholder="Cover Image URL (Optional)">
+        <input type="text" id="bookLocation" placeholder="Location (Shelf, Room)">
+        <button onclick="addBook()">Add Book</button>
+    </div>
     <table id="booksTable"></table>
 </div>
 
@@ -73,252 +188,432 @@ thead {
     <table id="rentedBooksTable">
         <thead>
             <tr>
-                <th>Title/Author/Publisher/Year</th>
+                <th>No.</th>
+                <th>Title / Author</th>
                 <th>Renter</th>
                 <th>Issue Date</th>
                 <th>Expired Date</th>
-                <th>Actions</th>
-            </tr>
+                <th class="admin-only">Actions</th> </tr>
         </thead>
         <tbody id="rentedBooksTableBody"></tbody>
     </table>
 </div>
 
+<div id="memberslistContent" class="content">
+    <h2>Members List</h2>
+    <div class="input-group" id="addMemberForm" style="display: none;"> <input type="text" id="memberName" placeholder="Member Name">
+        <input type="text" id="memberId" placeholder="Member ID">
+        <input type="text" id="memberPhone" placeholder="Phone Number">
+        <input type="text" id="memberEmail" placeholder="Email (Optional)">
+        <input type="text" id="memberNRC" placeholder="NRC/ID Card (Optional)">
+        <button onclick="addMember()">Add Member</button>
+    </div>
+    <table id="membersTable">
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Member Name</th>
+                <th>Member ID</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>NRC/ID</th>
+                <th class="admin-only">Actions</th> </tr>
+        </thead>
+        <tbody id="membersTableBody"></tbody>
+    </table>
+</div>
+
 <script>
-let books = JSON.parse(localStorage.getItem('books')) || [];
+    // --- IMPORTANT: This is NOT a secure login system. It's for demonstration only. ---
+    // The password is hardcoded in JavaScript and can be easily seen by anyone.
+    const ADMIN_PASSWORD = "admin123"; // CHANGE THIS IN A REAL APP, BUT DON'T PUT IT HERE!
+    let isAdminLoggedIn = false;
 
-function saveToLocalStorage() {
-    localStorage.setItem('books', JSON.stringify(books));
-}
+    // Initialize data from Local Storage
+    let books = JSON.parse(localStorage.getItem('books')) || [];
+    let members = JSON.parse(localStorage.getItem('members')) || [];
+    let rentedBooks = JSON.parse(localStorage.getItem('rentedBooks')) || [];
 
-function showContent(id) {
-    let contents = document.getElementsByClassName("content");
-    for (let i = 0; i < contents.length; i++) {
-        contents[i].style.display = "none";
+    // --- Utility Functions ---
+    function saveToLocalStorage() {
+        localStorage.setItem('books', JSON.stringify(books));
+        localStorage.setItem('members', JSON.stringify(members));
+        localStorage.setItem('rentedBooks', JSON.stringify(rentedBooks));
     }
-    let selectedContent = document.getElementById(id + "Content");
-    if (selectedContent) {
-        selectedContent.style.display = "block";
-        if (id === 'bookslist') {
+
+    // Function to update visibility of admin-only elements
+    function updateAdminVisibility() {
+        const adminElements = document.querySelectorAll('.admin-only');
+        const actionButtonContainers = document.querySelectorAll('.action-buttons');
+        const addBookForm = document.getElementById('addBookForm');
+        const addMemberForm = document.getElementById('addMemberForm');
+
+        if (isAdminLoggedIn) {
+            adminElements.forEach(el => el.style.display = 'table-cell'); // For table headers
+            actionButtonContainers.forEach(el => el.style.display = 'table-cell'); // For table cells with buttons
+            if (addBookForm) addBookForm.style.display = 'flex';
+            if (addMemberForm) addMemberForm.style.display = 'flex';
+        } else {
+            adminElements.forEach(el => el.style.display = 'none');
+            actionButtonContainers.forEach(el => el.style.display = 'none');
+            if (addBookForm) addBookForm.style.display = 'none';
+            if (addMemberForm) addMemberForm.style.display = 'none';
+        }
+    }
+
+    // --- Admin Login ---
+    function showAdminLogin() {
+        document.getElementById('adminLoginPanel').style.display = 'block';
+        document.getElementById('adminPassword').value = ''; // Clear password field
+    }
+
+    function loginAdmin() {
+        const enteredPassword = document.getElementById('adminPassword').value;
+        if (enteredPassword === ADMIN_PASSWORD) {
+            isAdminLoggedIn = true;
+            alert("Admin Login Successful!");
+            document.getElementById('adminLoginPanel').style.display = 'none';
+            updateAdminVisibility(); // Show admin features
+            showContent('bookslist'); // Optionally go to books list after login
+        } else {
+            alert("Incorrect Password!");
+            isAdminLoggedIn = false;
+        }
+    }
+
+    // --- Content Display ---
+    function showContent(id) {
+        let contents = document.getElementsByClassName("content");
+        for (let i = 0; i < contents.length; i++) {
+            contents[i].style.display = "none";
+        }
+        let selectedContent = document.getElementById(id + "Content");
+        if (selectedContent) {
+            selectedContent.style.display = "block";
+            if (id === 'bookslist') {
+                displayBooks();
+            } else if (id === 'rentedbookslist') {
+                displayRentedBooks();
+            } else if (id === 'memberslist') {
+                displayMembers();
+            }
+        }
+        // Hide admin login panel when navigating to other content
+        document.getElementById('adminLoginPanel').style.display = 'none';
+    }
+
+    // --- Book Management ---
+    function addBook() {
+        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
+        const title = document.getElementById("bookTitle").value.trim();
+        const author = document.getElementById("bookAuthor").value.trim();
+        const publisher = document.getElementById("bookPublisher").value.trim();
+        const year = document.getElementById("bookYear").value.trim();
+        const isbn = document.getElementById("bookISBN").value.trim();
+        const category = document.getElementById("bookCategory").value.trim();
+        const pages = document.getElementById("bookPages").value.trim();
+        const coverUrl = document.getElementById("bookCoverUrl").value.trim();
+        const location = document.getElementById("bookLocation").value.trim();
+
+        if (title && author && publisher && year && location) {
+            const book = {
+                id: Date.now(), // Unique ID for each book
+                title, author, publisher, year, isbn, category, pages, coverUrl, location,
+                isRented: false
+            };
+            books.push(book);
+            saveToLocalStorage();
             displayBooks();
-        } else if (id === 'rentedbookslist') {
+            // Clear input fields
+            document.getElementById("bookTitle").value = "";
+            document.getElementById("bookAuthor").value = "";
+            document.getElementById("bookPublisher").value = "";
+            document.getElementById("bookYear").value = "";
+            document.getElementById("bookISBN").value = "";
+            document.getElementById("bookCategory").value = "";
+            document.getElementById("bookPages").value = "";
+            document.getElementById("bookCoverUrl").value = "";
+            document.getElementById("bookLocation").value = "";
+        } else {
+            alert("Book Title, Author, Publisher, Year, and Location are required!");
+        }
+    }
+
+    function displayBooks(filteredBooks = books) {
+        let table = document.getElementById("booksTable");
+        let content = `<thead>
+            <tr>
+                <th>No.</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Publisher</th>
+                <th>Year</th>
+                <th>ISBN</th>
+                <th>Category</th>
+                <th>Pages</th>
+                <th>Cover</th>
+                <th>Location</th>
+                <th>Status</th>
+                <th class="admin-only">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="booksTableBody"></tbody>`;
+        table.innerHTML = content;
+        const tableBody = document.getElementById("booksTableBody");
+        let counter = 1;
+
+        filteredBooks.forEach((book) => {
+            const statusText = book.isRented ? 'Rented' : 'Available';
+            const statusColor = book.isRented ? 'red' : 'green';
+            tableBody.innerHTML += `<tr>
+                <td>${counter}</td>
+                <td>${book.title}</td>
+                <td>${book.author}</td>
+                <td>${book.publisher}</td>
+                <td>${book.year}</td>
+                <td>${book.isbn || 'N/A'}</td>
+                <td>${book.category || 'N/A'}</td>
+                <td>${book.pages || 'N/A'}</td>
+                <td>${book.coverUrl ? `<img src="${book.coverUrl}" alt="Cover" class="book-cover">` : 'N/A'}</td>
+                <td>${book.location}</td>
+                <td style="color: ${statusColor}; font-weight: bold;">${statusText}</td>
+                <td class="action-buttons">
+                    <button onclick="editBook(${book.id})">Edit</button>
+                    <button class="delete-btn" onclick="deleteBook(${book.id})">Delete</button>
+                    ${!book.isRented ? `<button onclick="promptRentBook(${book.id})">Rent</button>` : ''}
+                </td>
+            </tr>`;
+            counter++;
+        });
+        updateAdminVisibility(); // Re-apply visibility after rendering
+    }
+
+    function editBook(bookId) {
+        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
+        const bookIndex = books.findIndex(b => b.id === bookId);
+        if (bookIndex > -1) {
+            const book = books[bookIndex];
+            const newTitle = prompt("Enter new title:", book.title);
+            if (newTitle !== null) {
+                book.title = newTitle;
+                book.author = prompt("Enter new author:", book.author) || book.author;
+                book.publisher = prompt("Enter new publisher:", book.publisher) || book.publisher;
+                book.year = prompt("Enter new year:", book.year) || book.year;
+                book.isbn = prompt("Enter new ISBN:", book.isbn) || book.isbn;
+                book.category = prompt("Enter new category:", book.category) || book.category;
+                book.pages = prompt("Enter new pages:", book.pages) || book.pages;
+                book.coverUrl = prompt("Enter new cover URL:", book.coverUrl) || book.coverUrl;
+                book.location = prompt("Enter new location:", book.location) || book.location;
+                saveToLocalStorage();
+                displayBooks();
+            }
+        }
+    }
+
+    function deleteBook(bookId) {
+        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
+        const bookIndex = books.findIndex(b => b.id === bookId);
+        if (bookIndex > -1) {
+            if (confirm(`Are you sure you want to delete "${books[bookIndex].title}"?`)) {
+                rentedBooks = rentedBooks.filter(rb => rb.bookId !== bookId); // Also remove from rented
+                books.splice(bookIndex, 1);
+                saveToLocalStorage();
+                displayBooks();
+                displayRentedBooks();
+            }
+        }
+    }
+
+    function searchBooks() {
+        const searchValue = document.getElementById("searchBox").value.toLowerCase();
+        const filteredBooks = books.filter(book =>
+            book.title.toLowerCase().includes(searchValue) ||
+            book.author.toLowerCase().includes(searchValue) ||
+            book.publisher.toLowerCase().includes(searchValue) ||
+            String(book.year).toLowerCase().includes(searchValue) ||
+            String(book.isbn).toLowerCase().includes(searchValue) ||
+            String(book.category).toLowerCase().includes(searchValue)
+        );
+        displayBooks(filteredBooks);
+    }
+
+    // --- Member Management ---
+    function addMember() {
+        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
+        const name = document.getElementById("memberName").value.trim();
+        const id = document.getElementById("memberId").value.trim();
+        const phone = document.getElementById("memberPhone").value.trim();
+        const email = document.getElementById("memberEmail").value.trim();
+        const nrc = document.getElementById("memberNRC").value.trim();
+
+        if (name && id) {
+            members.push({ name, id, phone, email, nrc });
+            saveToLocalStorage();
+            displayMembers();
+            document.getElementById("memberName").value = "";
+            document.getElementById("memberId").value = "";
+            document.getElementById("memberPhone").value = "";
+            document.getElementById("memberEmail").value = "";
+            document.getElementById("memberNRC").value = "";
+        } else {
+            alert("Member name and ID are required!");
+        }
+    }
+
+    function displayMembers() {
+        let tableBody = document.getElementById("membersTableBody");
+        let content = "";
+        let counter = 1;
+
+        members.forEach((member) => {
+            content += `<tr>
+                <td>${counter}</td>
+                <td>${member.name}</td>
+                <td>${member.id}</td>
+                <td>${member.phone || 'N/A'}</td>
+                <td>${member.email || 'N/A'}</td>
+                <td>${member.nrc || 'N/A'}</td>
+                <td class="action-buttons">
+                    <button onclick="editMember(${member.id})">Edit</button>
+                    <button class="delete-btn" onclick="deleteMember(${member.id})">Delete</button>
+                </td>
+            </tr>`;
+            counter++;
+        });
+        tableBody.innerHTML = content;
+        updateAdminVisibility(); // Re-apply visibility after rendering
+    }
+
+    function editMember(memberId) {
+        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
+        const memberIndex = members.findIndex(m => m.id === memberId);
+        if (memberIndex > -1) {
+            const member = members[memberIndex];
+            const newName = prompt("Enter new name:", member.name);
+            if (newName !== null) {
+                member.name = newName;
+                member.id = prompt("Enter new ID:", member.id) || member.id;
+                member.phone = prompt("Enter new phone:", member.phone) || member.phone;
+                member.email = prompt("Enter new email:", member.email) || member.email;
+                member.nrc = prompt("Enter new NRC/ID:", member.nrc) || member.nrc;
+                saveToLocalStorage();
+                displayMembers();
+            }
+        }
+    }
+
+    function deleteMember(memberId) {
+        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
+        const memberIndex = members.findIndex(m => m.id === memberId);
+        if (memberIndex > -1) {
+            if (confirm(`Are you sure you want to delete member "${members[memberIndex].name}"?`)) {
+                members.splice(memberIndex, 1);
+                saveToLocalStorage();
+                displayMembers();
+            }
+        }
+    }
+
+    // --- Rented Books Management ---
+    function promptRentBook(bookId) {
+        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
+        const book = books.find(b => b.id === bookId);
+        if (!book) return;
+
+        if (book.isRented) {
+            alert("This book is already rented.");
+            return;
+        }
+
+        const renterName = prompt(`Enter the renter's name for "${book.title}":`);
+        if (!renterName) return;
+
+        const issueDate = new Date().toISOString().split('T')[0];
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 7); // 7 days rental
+        const expiredDate = expirationDate.toISOString().split('T')[0];
+
+        book.isRented = true; // Mark the book as rented in the main books array
+
+        rentedBooks.push({
+            bookId: book.id,
+            title: book.title,
+            author: book.author,
+            renter: renterName,
+            issueDate: issueDate,
+            expiredDate: expiredDate
+        });
+        saveToLocalStorage();
+        displayBooks(); // Update status in books list
+        displayRentedBooks(); // Update rented books list
+    }
+
+    function displayRentedBooks() {
+        let tableBody = document.getElementById("rentedBooksTableBody");
+        let content = "";
+        let counter = 1;
+
+        rentedBooks.forEach((rentedBook) => {
+            const currentDate = new Date();
+            const expiredDate = new Date(rentedBook.expiredDate);
+            const rowClass = currentDate > expiredDate ? 'expired' : '';
+
+            content += `<tr class="${rowClass}">
+                <td>${counter}</td>
+                <td>${rentedBook.title} / ${rentedBook.author}</td>
+                <td>${rentedBook.renter}</td>
+                <td>${rentedBook.issueDate}</td>
+                <td>${rentedBook.expiredDate}</td>
+                <td class="action-buttons">
+                    <button onclick="returnBook(${rentedBook.bookId})">Return</button>
+                    <button onclick="renewBook(${rentedBook.bookId})">Renew</button>
+                </td>
+            </tr>`;
+            counter++;
+        });
+        tableBody.innerHTML = content;
+        updateAdminVisibility(); // Re-apply visibility after rendering
+    }
+
+    function returnBook(bookId) {
+        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
+        const bookIndexInRented = rentedBooks.findIndex(rb => rb.bookId === bookId);
+        const bookIndexInBooks = books.findIndex(b => b.id === bookId);
+
+        if (bookIndexInRented > -1 && bookIndexInBooks > -1) {
+            if (confirm(`Are you sure you want to return "${books[bookIndexInBooks].title}"?`)) {
+                rentedBooks.splice(bookIndexInRented, 1); // Remove from rentedBooks list
+                books[bookIndexInBooks].isRented = false; // Mark as not rented in main books list
+                saveToLocalStorage();
+                displayRentedBooks();
+                displayBooks(); // Update books list status
+            }
+        }
+    }
+
+    function renewBook(bookId) {
+        if (!isAdminLoggedIn) { alert("Please log in as Admin to perform this action."); return; }
+        const rentedBookIndex = rentedBooks.findIndex(rb => rb.bookId === bookId);
+        if (rentedBookIndex > -1) {
+            let newExpirationDate = new Date(rentedBooks[rentedBookIndex].expiredDate);
+            newExpirationDate.setDate(newExpirationDate.getDate() + 7); // Renew for 7 more days
+            rentedBooks[rentedBookIndex].expiredDate = newExpirationDate.toISOString().split('T')[0];
+            saveToLocalStorage();
             displayRentedBooks();
         }
     }
-}
 
-function displayBooks() {
-    let table = document.getElementById("booksTable");
-    let content = "<tr><th>No.</th><th>Book Title(စာအုပ်အမည်)/Author(စာရေးသူ)/Publisher(ထုတ်ဝေသူ)/Year(ခုနှစ်)</th><th>Action</th></tr>";
-    
-    // Initialize counter
-    let counter = 1;
-    
-    books.forEach((book, index) => {
-        content += `<tr>
-                        <td>${counter}</td>
-                        <td>${book.title}</td>
-                        <td>
-                            <button onclick="editBook(${index})">Edit</button>
-                            <button onclick="deleteBook(${index})">Delete</button>
-                            <button onclick="rentBook(${index})">For Rent</button>
-                        </td>
-                    </tr>`;
-        // Increment the counter for the next book
-        counter++;
-    });
-    
-    table.innerHTML = content;
-}
-
-
-function addBook() {
-    let title = document.getElementById("bookTitle").value;
-    if (title) {
-        let book = { title: title };
-        books.push(book);
-        saveToLocalStorage();
-        displayBooks();
-        document.getElementById("bookTitle").value = "";
-    }
-}
-
-function editBook(index) {
-    let newTitle = prompt("Enter the new title for the book:", books[index].title);
-    if (newTitle) {
-        books[index].title = newTitle;
-        saveToLocalStorage();
-        displayBooks();
-    }
-}
-
-function deleteBook(index) {
-    if (confirm(`Are you sure you want to delete "${books[index].title}"?`)) {
-        books.splice(index, 1);
-        saveToLocalStorage();
-        displayBooks();
-    }
-}
-
-function rentBook(index) {
-    let renterName = prompt("Enter the renter's name:");
-    let currentDate = new Date().toISOString().split('T')[0];
-
-    if (renterName) {
-        books[index].renter = renterName;
-        books[index].issueDate = currentDate;
-
-        let expirationDate = new Date();
-        expirationDate.setDate(expirationDate.getDate() + 7);
-        books[index].expiredDate = expirationDate.toISOString().split('T')[0];
-
-        saveToLocalStorage();
-        displayBooks();
-    }
-}
-
-function searchBooks() {
-    let searchValue = document.getElementById("searchBox").value.toLowerCase();
-    let table = document.getElementById("booksTable");
-    let content = "<tr><th>Book Title/Author/Publisher/Year</th><th>Action</th></tr>";
-    table.innerHTML = ""; // Clear existing table content
-
-    books.forEach((book, index) => {
-        if (book.title.toLowerCase().includes(searchValue)) {
-            content += `<tr>
-                            <td><span class="green-background">${book.title}</span></td>
-                            <td>
-                                <button onclick="editBook(${index})">Edit</button>
-                                <button onclick="deleteBook(${index})">Delete</button>
-                                <button onclick="rentBook(${index})">For Rent</button>
-                            </td>
-                        </tr>`;
-        }
-    });
-
-    table.innerHTML = content; // Update table with filtered content
-}
-
-// ... [rest of your JavaScript code]
-
-function displayRentedBooks() {
-    let rentedTable = document.getElementById("rentedBooksTable");
-    let content = "<tr><th>Title</th><th>Renter</th><th>Issue Date</th><th>Expired Date</th><th>Actions</th></tr>";
-    rentedTable.innerHTML = content; // Clear existing table content
-
-    books.forEach((book, index) => {
-        if (book.renter && book.issueDate && book.expiredDate) {
-            let currentDate = new Date();
-            let expiredDate = new Date(book.expiredDate);
-
-            content += `<tr>
-                            <td>${book.title}</td>
-                            <td>${book.renter}</td>
-                            <td>${book.issueDate}</td>
-                            <td>${book.expiredDate}</td>
-                            <td>
-                                <button onclick="returnBook(${index})">Return</button>
-                                <button onclick="renewBook(${index})">Renew</button>
-                            </td>
-                        </tr>`;
-
-            if (currentDate > expiredDate) {
-                // Highlight rows with expired books
-                content = content.replace("<tr>", '<tr class="expired">');
-            }
-        }
-    });
-
-    rentedTable.innerHTML = content; // Update table with rented books content
-}
-
-function rentBook(index) {
-    let renterName = prompt("Enter the renter's name:");
-    
-    // Prompt for the desired issue date
-    let issueDate = prompt("Enter the desired issue date (YYYY-MM-DD):");
-    if (!isValidDate(issueDate)) {
-        alert("Invalid date format. Please enter a valid date (YYYY-MM-DD).");
-        return;
+    // --- Initial Load ---
+    function goToIndex() {
+        // Reloads the current page, effectively resetting the state
+        location.reload();
     }
 
-    if (renterName) {
-        books[index].renter = renterName;
-        books[index].issueDate = issueDate;
-
-        // Set the book expiration date to 7 days from the chosen issue date
-        let expirationDate = new Date(issueDate);
-        expirationDate.setDate(expirationDate.getDate() + 7);
-        books[index].expiredDate = expirationDate.toISOString().split('T')[0];
-
-        saveToLocalStorage();
-        displayBooks();
+    // When the page loads, display books and update visibility of admin features
+    window.onload = function() {
+        showContent('bookslist');
+        updateAdminVisibility(); // Initially hide admin features
     }
-}
-
-// Helper function to validate date format
-function isValidDate(dateString) {
-    let regEx = /^\d{4}-\d{2}-\d{2}$/;
-    return dateString.match(regEx) != null;
-}
-
-function deleteRentedBook(title) {
-    let index = books.findIndex(book => book.title === title);
-    if (index !== -1) {
-        delete books[index].renter;
-        delete books[index].issueDate;
-        delete books[index].expiredDate;
-        saveToLocalStorage();
-        displayRentedBooks();
-    }
-}
-
-function returnBook(index) {
-    books[index].renter = null;
-    books[index].issueDate = null;
-    books[index].expiredDate = null;
-    saveToLocalStorage();
-    displayRentedBooks();
-}
-
-function renewBook(index) {
-    let newExpirationDate = new Date(books[index].expiredDate);
-    newExpirationDate.setDate(newExpirationDate.getDate() + 7);
-    books[index].expiredDate = newExpirationDate.toISOString().split('T')[0];
-    saveToLocalStorage();
-    displayRentedBooks();
-}
-
-function addBook() {
-    let title = document.getElementById("bookTitle").value;
-    if (title) {
-        books.push({ title: title });
-        saveToLocalStorage();
-        displayBooks();
-        document.getElementById("bookTitle").value = "";
-    }
-}
-// ... [rest of your JavaScript code]
-
-window.onload = function() {
-    showContent('bookslist');
-    displayRentedBooks(); // Display rented books when the page loads
-}
-
-window.onload = function() {
-    showContent('bookslist');
-}
-
-function goToIndex() {
-    window.location.href = "index.html";
-}
 </script>
-
-<div id="exitContent" class="content">
-  <script>
-    function goToIndex() {window.location.href = "index.html";}
-  </script>
-</div>
-
 </body>
 </html>
