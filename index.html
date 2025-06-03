@@ -752,7 +752,8 @@
                     </div>
                     <div class="department-content">
                         <h3>ရွှေဟင်္သာစာကြည့်တိုက်</h3>
-                        <p>ဗုဒ္ဓဘာသာ၊ မြန်မာစာပေများနှင့် ပညာရေးဆိုင်ရာစာအုပ်စာတမ်းများ စုဆောင်းထားရှိပါသည်။</p>
+                        <p>ရွှေဟင်္သာစာကြည့်တိုက်သည် ပဲခူးတိုင်းဒေသကြီး၊ ညောင်လေးပင်ခရိုင်၊ ညောင်လေးပင်မြို့၊ မြို့မ (၅)ရပ်ကွက်၊ ရွှေဟင်္သာလမ်း၊ တိုးချဲ့ (၁)၊ ကျွန်းလေးပိုင်း၊
+                            အမှတ် ၆၆၃၊ ရွှေဟင်္သာစင်တွင် တည်ရှိပါသည်။ စာကြည့်တိုက်တွင် ဗုဒ္ဓဘာသာဆိုင်ရာစာပေများ၊ အင်္ဂလိပ်ဘာသာရပ်ဆိုင်ရာစာပေများ၊ မြန်မာစာပေများနှင့် ပညာရေးဆိုင်ရာစာအုပ်စာတမ်းများ စုဆောင်းထားရှိပါသည်။</p>
                         <a href="#" class="read-more">ဆက်လက်ဖတ်ရှုရန် <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
@@ -815,6 +816,11 @@
                         <div class="main-video-container">
                             <video id="main-video" controls autoplay></video>
                         </div>
+                         <div class="thumbnails-container">
+                            <div class="thumbnail" onclick="changeMainVideo('video1', 'https://vdo.ninja/?view=hinnthar')">
+                                <div class="channel-title">Shwehinnthar Channel</div>
+                                <video id="video1" muted></video>
+                            </div>
                         <div class="thumbnails-container">
                             <div class="thumbnail" onclick="changeMainVideo('video1', 'http://l1-xl1.myanmarnet.com/relay/mahar/ch1/stream.m3u8')">
                                 <div class="channel-title">Mahar Channel</div>
@@ -1010,7 +1016,7 @@
         // or a default stream.
         // For example, to start with Mahar Channel:
         window.addEventListener('DOMContentLoaded', () => {
-             changeMainVideo('video1', 'http://l1-xl1.myanmarnet.com/relay/mahar/ch1/stream.m3u8');
+             changeMainVideo('video1', 'https://vdo.ninja/?view=hinnthar');
         });
 
     </script>
